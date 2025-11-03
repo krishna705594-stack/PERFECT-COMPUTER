@@ -1,541 +1,228 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>LaptopCare — Repair & Service</title>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PERFECT COMPUTERS</title>
 <style>
-  :root{
-    --primary:#0b5ed7;
-    --dark:#0b2a66;
-    --muted:#6b7280;
-    --card-bg:#fff;
-    --bg:#f5f7fb;
-    --accent:#ffd33d;
-    --blackbox-border:6px;
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #fff;
+    overflow-x: hidden;
   }
-  *{box-sizing:border-box}
-  body{font-family:"Poppins",system-ui,Segoe UI,Roboto,Helvetica,Arial; margin:0; background:var(--bg); color:#111}
-  header{background:linear-gradient(90deg,var(--primary),#2a8bf2); padding:18px 24px; color:#fff; display:flex; align-items:center; justify-content:space-between; gap:12px}
-  header .brand{display:flex; align-items:center; gap:12px}
-  header h1{font-size:20px; margin:0}
-  nav{display:flex; gap:8px; align-items:center}
-  button.btn{background:#083e9b;color:#fff;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;font-weight:600}
-  button.btn.ghost{background:transparent;border:2px solid rgba(255,255,255,0.18)}
-  main{max-width:1200px;margin:28px auto;padding:0 18px}
-  .hero{display:flex;gap:20px;align-items:center;justify-content:space-between;margin-bottom:22px}
-  .hero-left{flex:1}
-  .hero-left h2{font-size:28px;margin-bottom:8px}
-  .hero-left p{color:var(--muted);margin-bottom:12px}
-  .hero-right{width:320px; text-align:right}
-  .cta{display:inline-block;background:var(--accent);padding:10px 14px;border-radius:8px;font-weight:700;color:#111}
-
-  /* Brand folder grid (like your mockups) */
-  #brandGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:18px}
-  .brand-folder{
-    border:var(--blackbox-border) solid #000;
-    background:#fff;
-    padding:12px;
-    height:130px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    transition:transform .18s, box-shadow .18s;
-    position:relative;
+  header {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    font-size: 1.8em;
+    font-weight: bold;
+    letter-spacing: 2px;
   }
-  .brand-folder:hover{transform:translateY(-6px);box-shadow:0 14px 26px rgba(10,30,80,0.12)}
-  .brand-folder .label{font-weight:600;letter-spacing:1px}
-  .brand-folder .logo{position:absolute;left:10px;top:10px;width:40px;height:40px;opacity:.95}
-
-  /* Models modal */
-  .modal { position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(2,6,23,0.55); z-index:1000}
-  .modal.open{display:flex}
-  .modal-card{width:95%;max-width:980px;background:var(--card-bg);border-radius:12px;padding:18px;box-shadow:0 18px 40px rgba(10,20,60,.18); overflow:auto; max-height:85vh}
-  .modal-card header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-  .models-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-  .model-card{
-    border:6px solid #000; background:#fff; padding:8px; border-radius:6px; min-height:160px; display:flex; flex-direction:column; gap:8px; align-items:center;
+  .login-box, .brands, .models {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 20px;
   }
-  .model-card img{width:100%; height:96px; object-fit:cover; border-radius:4px}
-  .model-name{font-weight:600; margin-top:4px}
-  .problem-box{width:100%; margin-top:6px; display:flex; gap:8px}
-  .problem-box input{flex:1;padding:8px;border:1px solid #ddd;border-radius:6px}
-  .problem-box button{padding:8px 10px;border-radius:6px;border:none;background:var(--primary);color:#fff;cursor:pointer}
-
-  /* Responsive */
-  @media (max-width:1100px){
-    #brandGrid{grid-template-columns:repeat(3,1fr)}
-    .models-grid{grid-template-columns:repeat(3,1fr)}
+  .login-box.active, .brands.active, .models.active {
+    display: flex;
   }
-  @media (max-width:800px){
-    .hero{flex-direction:column;align-items:flex-start}
-    #brandGrid{grid-template-columns:repeat(2,1fr)}
-    .models-grid{grid-template-columns:repeat(2,1fr)}
+  .login {
+    background: rgba(255,255,255,0.1);
+    padding: 30px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 15px rgba(255,255,255,0.2);
   }
-  @media (max-width:420px){
-    #brandGrid{grid-template-columns:1fr}
-    .models-grid{grid-template-columns:1fr}
+  .login input {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    width: 220px;
+    border: none;
+    border-radius: 8px;
   }
-
-  /* Services & Info */
-  .services{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
-  .service-card{background:#fff;padding:12px;border-radius:8px;box-shadow:0 6px 18px rgba(10,20,60,.06); text-align:center}
-  .service-card h4{margin-bottom:6px}
-  @media (max-width:900px){ .services{grid-template-columns:repeat(2,1fr)} }
-
-  /* Owner panel button */
-  .owner-panel{position:fixed; right:18px; top:90px; z-index:1200}
-  .owner-btn{background:#111;color:#fff;padding:10px 12px;border-radius:8px;border:none;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.15)}
-
-  /* Chatbot quick */
-  .chatbot-floating{position:fixed; right:18px; bottom:18px; background:var(--primary); color:#fff; width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 28px rgba(11,94,215,.25);font-weight:700;z-index:1200}
-  .assistant { position:fixed; right:86px; bottom:18px; width:360px; max-width:92%; background:#fff;padding:12px;border-radius:10px; box-shadow:0 18px 50px rgba(10,20,60,.16); display:none; z-index:1200 }
-  .assistant.open{display:block}
-  .assistant .messages{height:160px;overflow:auto;padding:8px;border-radius:6px;border:1px solid #eee;margin-bottom:8px}
-  .assistant input{width:100%;padding:8px;border:1px solid #ddd;border-radius:6px}
-
-  /* Footer */
-  footer{margin-top:28px;padding:18px;text-align:center;color:#fff;background:linear-gradient(90deg,var(--primary),#155bd8)}
-  .small{font-size:13px;color:var(--muted);margin-top:8px}
-  /* Owner dashboard */
-  .owner-modal .panel{display:flex;gap:12px}
-  .owner-left{width:320px;background:#fff;padding:12px;border-radius:8px;overflow:auto;max-height:70vh}
-  .owner-right{flex:1;background:#fff;padding:12px;border-radius:8px;max-height:70vh;overflow:auto}
-  .msg-item{border-bottom:1px dashed #eee;padding:8px;cursor:pointer}
-  .msg-item small{color:var(--muted)}
-  .msg-open .meta{font-size:13px;color:var(--muted);margin-bottom:6px}
-  .tag{display:inline-block;padding:4px 8px;background:#eef6ff;color:#083e9b;border-radius:6px;font-weight:600;margin-right:6px}
+  .login button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #00bcd4;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .login button:hover {
+    background: #0097a7;
+  }
+  .brand {
+    background: rgba(255,255,255,0.1);
+    width: 180px;
+    margin: 10px;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .brand:hover {
+    background: rgba(255,255,255,0.2);
+    transform: scale(1.05);
+  }
+  .model-card {
+    background: rgba(255,255,255,0.1);
+    width: 260px;
+    margin: 10px;
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(255,255,255,0.1);
+  }
+  .model-card img {
+    width: 100%;
+    height: 150px;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+  form {
+    margin-top: 10px;
+    text-align: left;
+  }
+  form input, form textarea {
+    width: 100%;
+    margin: 5px 0;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+  }
+  form label {
+    font-size: 0.9em;
+  }
+  .send-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #00bcd4;
+    color: white;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  .send-btn:hover {
+    background: #0097a7;
+  }
+  .back-btn {
+    margin: 20px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    background: #ff5722;
+    color: white;
+    cursor: pointer;
+  }
+  .camera-label {
+    display: inline-block;
+    background: #607d8b;
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 5px;
+  }
+  input[type="file"] {
+    display: none;
+  }
 </style>
 </head>
 <body>
+<header>PERFECT COMPUTERS</header>
 
-<header>
-  <div class="brand">
-    <img src="" alt="" style="width:44px;height:44px;border-radius:6px;background:#fff;margin-right:8px">
-    <div>
-      <h1>LaptopCare</h1>
-      <div style="font-size:12px;color:rgba(255,255,255,.9)">Chip-level & component repairs — Trusted since 2020</div>
-    </div>
-  </div>
-  <nav>
-    <button class="btn ghost" id="openServices">Services</button>
-    <button class="btn ghost" id="openContact">Contact</button>
-    <button class="btn" id="loginBtn">Login</button>
-    <button class="btn" id="signupBtn">Signup</button>
-  </nav>
-</header>
-
-<main>
-  <section class="hero">
-    <div class="hero-left">
-      <h2>Professional Laptop Repair & Chip-Level Service</h2>
-      <p>We fix laptops of all brands — motherboard repair, chip-level, data recovery, virus removal & more. Fast turnaround, genuine parts.</p>
-      <div class="small">Our Shop: <strong>LaptopCare Center, MG Road, YourCity</strong></div>
-      <div style="margin-top:12px">
-        <span class="cta">Visit Us • Walk-ins Welcome</span>
-      </div>
-    </div>
-    <div class="hero-right">
-      <img src="https://source.unsplash.com/400x260/?laptop,repair" alt="hero" style="width:320px;border-radius:10px;box-shadow:0 10px 28px rgba(10,20,60,.12)">
-    </div>
-  </section>
-
-  <h3 style="margin-top:6px">Choose Brand (tap a folder)</h3>
-  <div id="brandGrid" aria-live="polite"></div>
-
-  <h3 style="margin-top:28px">Our Services</h3>
-  <div class="services" id="services">
-    <!-- Services populated by JS -->
-  </div>
-
-  <h3 style="margin-top:28px">About the Shop</h3>
-  <div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:12px">
-    <div style="flex:1;min-width:260px;background:#fff;padding:14px;border-radius:8px;box-shadow:0 8px 20px rgba(10,20,60,.06)">
-      <h4>What we do (Highlights)</h4>
-      <ul style="color:var(--muted);margin-left:16px">
-        <li>Chip-level Repairing & Soldering</li>
-        <li>Motherboard Replacement & Repair</li>
-        <li>Data Recovery & Disk Repair</li>
-        <li>Virus Removal & OS Services</li>
-        <li>Battery / Part Replacement & Diagnostics</li>
-      </ul>
-    </div>
-    <div style="width:320px;min-width:260px;background:#fff;padding:14px;border-radius:8px;box-shadow:0 8px 20px rgba(10,20,60,.06)">
-      <h4>Why Choose Us?</h4>
-      <p style="color:var(--muted)">Experienced technicians, chip-level expertise, transparent pricing, original or high-quality parts, warranty options.</p>
-      <div style="margin-top:8px"><span class="tag">Chip-Level</span><span class="tag">Genuine Parts</span></div>
-    </div>
-  </div>
-
-  <div id="contactSection" style="margin-top:26px;display:none">
-    <h3>Contact & Location</h3>
-    <div style="display:flex;gap:18px;flex-wrap:wrap">
-      <div style="flex:1;min-width:280px;background:#fff;padding:12px;border-radius:8px;box-shadow:0 8px 20px rgba(10,20,60,.06)">
-        <h4>Our Shop</h4>
-        <p style="color:var(--muted)">LaptopCare Center<br/>MG Road, YourCity<br/>Phone: +91-98765-43210<br/>Email: support@laptopcare.example</p>
-      </div>
-      <div style="width:420px;min-width:260px;background:#fff;padding:12px;border-radius:8px;box-shadow:0 8px 20px rgba(10,20,60,.06)">
-        <h4>Map (placeholder)</h4>
-        <div style="height:180px;background:#eef2ff;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted)">Map placeholder</div>
-      </div>
-    </div>
-  </div>
-</main>
-
-<!-- Models Modal -->
-<div id="modelsModal" class="modal" aria-hidden="true">
-  <div class="modal-card" role="dialog" aria-modal="true">
-    <header>
-      <div>
-        <strong id="modalBrandTitle">Brand Models</strong>
-        <div style="font-size:13px;color:var(--muted)" id="modalBrandSub">Select a model & send problem to owner</div>
-      </div>
-      <div>
-        <button class="btn" id="closeModels">Close</button>
-      </div>
-    </header>
-
-    <div id="modelsContainer" class="models-grid"></div>
+<!-- LOGIN PAGE -->
+<div class="login-box active">
+  <div class="login">
+    <h2>Owner Login</h2>
+    <input type="text" id="user" placeholder="Username">
+    <input type="password" id="pass" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <p style="font-size:12px;margin-top:10px;color:#ccc;">Username: 1 | Password: 55</p>
   </div>
 </div>
 
-<!-- Owner Dashboard Modal (for owner) -->
-<div id="ownerModal" class="modal owner-modal" aria-hidden="true">
-  <div class="modal-card" style="max-width:1100px">
-    <header>
-      <div><strong>Owner Control Panel</strong><div style="font-size:13px;color:var(--muted)">Manage incoming messages & tickets</div></div>
-      <div><button class="btn" id="closeOwner">Close</button></div>
-    </header>
-
-    <div class="panel" style="gap:12px">
-      <aside class="owner-left">
-        <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px">
-          <input id="ownerFilter" placeholder="Filter by brand/model" style="flex:1;padding:8px;border-radius:6px;border:1px solid #eee">
-          <button class="btn" id="ownerRefresh">Refresh</button>
-        </div>
-        <div id="ownerMsgList"></div>
-      </aside>
-
-      <section class="owner-right">
-        <div id="ownerDetail"><em>Select a message to view details</em></div>
-      </section>
-    </div>
-  </div>
+<!-- BRANDS PAGE -->
+<div class="brands">
+  <div class="brand" onclick="openModels('HP')">HP</div>
+  <div class="brand" onclick="openModels('Dell')">Dell</div>
+  <div class="brand" onclick="openModels('Lenovo')">Lenovo</div>
+  <div class="brand" onclick="openModels('Asus')">Asus</div>
+  <div class="brand" onclick="openModels('Acer')">Acer</div>
 </div>
 
-<!-- Chatbot floating & assistant -->
-<div class="chatbot-floating" id="chatToggle">AI</div>
-<div class="assistant" id="assistant">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-    <strong>LaptopFixPro</strong>
-    <small style="color:var(--muted);font-size:12px">AI Assistant</small>
-  </div>
-  <div class="messages" id="assistantMessages">
-    <div style="color:var(--muted);font-size:13px">Hello! Ask about common laptop problems (e.g., "no power", "fan loud", "no display").</div>
-  </div>
-  <div style="display:flex;gap:8px">
-    <input id="assistantInput" placeholder="Type a quick question...">
-    <button class="btn" id="assistantSend">Ask</button>
-  </div>
+<!-- MODELS PAGE -->
+<div class="models" id="modelsPage">
+  <button class="back-btn" onclick="goBack()">← Back</button>
+  <div id="modelsContainer" style="display:flex;flex-wrap:wrap;justify-content:center;"></div>
 </div>
-
-<!-- Login / Signup modals (simple) -->
-<div id="authModal" class="modal" aria-hidden="true">
-  <div class="modal-card" style="max-width:420px">
-    <header><strong id="authTitle">Login</strong><div style="font-size:13px;color:var(--muted)">Use an account to save chats & messages</div></header>
-    <div style="margin-top:10px">
-      <form id="authForm">
-        <div style="margin-bottom:8px">
-          <label style="font-size:13px;color:var(--muted)">Username or Email</label>
-          <input id="authUser" required style="width:100%;padding:8px;border-radius:6px;border:1px solid #eee">
-        </div>
-        <div style="margin-bottom:8px">
-          <label style="font-size:13px;color:var(--muted)">Password</label>
-          <input id="authPass" type="password" required style="width:100%;padding:8px;border-radius:6px;border:1px solid #eee">
-        </div>
-        <div style="display:flex;gap:8px;justify-content:flex-end">
-          <button type="submit" class="btn" id="authSubmit">Login</button>
-          <button type="button" class="btn ghost" id="authCancel">Cancel</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<footer>
-  <div>© LaptopCare 2025 — Laptop Repairing • Chip Level • Data Recovery</div>
-  <div class="small">Location: LaptopCare Center, MG Road, YourCity • Phone: +91 98765 43210</div>
-</footer>
 
 <script>
-/*
-Owner login credentials for demo:
-username: owner
-password: ownerpass
+const loginBox = document.querySelector('.login-box');
+const brands = document.querySelector('.brands');
+const modelsPage = document.querySelector('.models');
+const modelsContainer = document.getElementById('modelsContainer');
 
-Note: This is a single-file demo. All data stored in localStorage.
-*/
+function login() {
+  const u = document.getElementById('user').value;
+  const p = document.getElementById('pass').value;
+  // 👉 Replace credentials here later
+  if(u === '1' && p === '55'){
+    loginBox.classList.remove('active');
+    brands.classList.add('active');
+  } else {
+    alert('Invalid Credentials');
+  }
+}
 
-// ---------- data ----------
-const brands = {
-  "Lenovo":["ThinkPad T480","IdeaPad 3 15","Legion 5 15","Yoga Slim 7"],
-  "HP":["Pavilion 14","Envy x360","EliteBook 840","OMEN 16"],
-  "Dell":["Inspiron 15 5567","XPS 13 9370","Latitude 7490","G15 5511"],
-  "Asus":["ROG Zephyrus G14","ZenBook 13","VivoBook 15","TUF Gaming"],
-  "Acer":["Aspire 5","Predator Helios 300","Swift 3","Nitro 5"],
-  "MSI":["GF63 Thin","Katana 15","Stealth 16","Pulse GL66"],
-  "Razer":["Blade 15","Blade Stealth 13","Razer 14","Blade Pro 17"],
-  "Other":["Generic Laptop","Chromebook Model A","Netbook X","Legacy Model"]
-};
-
-const servicesList = [
-  "Laptop Repairing","Laptop Service","Data Recovery","Motherboard Repair","Virus Removal",
-  "Complete Service","Motherboard Replacement","Part Replacement","Battery Replacement","Chip Level Repairing"
-];
-
-// ---------- util ----------
-const $ = id => document.getElementById(id);
-
-// ---------- populate brand grid & services ----------
-const brandGrid = $('brandGrid');
-Object.keys(brands).forEach(b=>{
-  const d = document.createElement('div');
-  d.className = 'brand-folder';
-  d.innerHTML = `<div class="label">${b.toUpperCase()}</div>`;
-  d.addEventListener('click', ()=> openModels(b));
-  brandGrid.appendChild(d);
-});
-
-const servicesEl = $('services');
-servicesList.forEach(s=>{
-  const card = document.createElement('div');
-  card.className = 'service-card';
-  card.innerHTML = `<h4>${s}</h4><p style="color:var(--muted);font-size:13px">We provide professional ${s.toLowerCase()} with warranty options.</p>`;
-  servicesEl.appendChild(card);
-});
-
-// ---------- models modal ----------
-const modelsModal = $('modelsModal');
-const modelsContainer = $('modelsContainer');
-const modalBrandTitle = $('modalBrandTitle');
-const modalBrandSub = $('modalBrandSub');
-$('closeModels').addEventListener('click', ()=> modelsModal.classList.remove('open'));
+function goBack(){
+  modelsPage.classList.remove('active');
+  brands.classList.add('active');
+}
 
 function openModels(brand){
-  modalBrandTitle.textContent = brand + ' — Models';
-  modalBrandSub.textContent = `Tap a model and type the problem. Message will be delivered to owner.`;
+  brands.classList.remove('active');
+  modelsPage.classList.add('active');
   modelsContainer.innerHTML = '';
-  const arr = brands[brand] || [];
-  // create 8 slots (fill empties)
-  for(let i=0;i<8;i++){
-    const modelName = arr[i] || `Model ${i+1}`;
+  const sampleModels = [
+    {model:'Model A', img:'https://via.placeholder.com/300x150?text=' + brand + '+Model+A'},
+    {model:'Model B', img:'https://via.placeholder.com/300x150?text=' + brand + '+Model+B'},
+    {model:'Model C', img:'https://via.placeholder.com/300x150?text=' + brand + '+Model+C'}
+  ];
+  sampleModels.forEach(m=>{
     const card = document.createElement('div');
-    card.className = 'model-card';
-    // placeholder image (different query)
-    const img = document.createElement('img');
-    img.src = `https://source.unsplash.com/400x200/?${brand.toLowerCase()},laptop,${i}`;
-    img.alt = modelName;
-    const name = document.createElement('div');
-    name.className = 'model-name';
-    name.textContent = modelName;
-    const pb = document.createElement('div');
-    pb.className = 'problem-box';
-    const input = document.createElement('input');
-    input.placeholder = 'Describe the problem (e.g., no power, screen flicker)';
-    const send = document.createElement('button');
-    send.textContent = 'Send to Owner';
-    send.addEventListener('click', ()=> {
-      const text = input.value.trim();
-      if(!text) return alert('Please type the problem before sending.');
-      saveMessageToOwner({
-        brand, model: modelName, user: currentUser ? currentUser.username : 'Guest', message:text, date:new Date().toISOString()
-      });
-      input.value = '';
-      alert('Message sent to owner. They will contact you.');
-    });
-    pb.appendChild(input); pb.appendChild(send);
-    card.appendChild(img); card.appendChild(name); card.appendChild(pb);
+    card.className='model-card';
+    card.innerHTML = `
+      <img src="${m.img}" alt="${brand} ${m.model}">
+      <form onsubmit="event.preventDefault(); alert('Message sent to PERFECT COMPUTERS'); this.reset();">
+        <label>Laptop Company</label>
+        <input type="text" value="${brand}" readonly>
+        <label>Model No</label>
+        <input type="text" value="${m.model}">
+        <label>Series</label>
+        <input type="text" placeholder="Enter Series">
+        <label>Mobile No</label>
+        <input type="tel" placeholder="Enter Mobile Number" required>
+        <label>Issue</label>
+        <textarea rows="2" placeholder="Describe the issue..."></textarea>
+        <label><input type="checkbox"> Repaired Before?</label><br>
+        <label class="camera-label">📷 Upload Picture
+          <input type="file" accept="image/*" capture="camera">
+        </label>
+        <button class="send-btn" type="submit">Send</button>
+      </form>
+    `;
     modelsContainer.appendChild(card);
-  }
-  modelsModal.classList.add('open');
-}
-
-// ---------- saving messages ----------
-function saveMessageToOwner(payload){
-  // store under 'ownerMessages' array
-  const arr = JSON.parse(localStorage.getItem('ownerMessages') || '[]');
-  arr.unshift(payload); // newest first
-  localStorage.setItem('ownerMessages', JSON.stringify(arr));
-  // also store per-user mailbox
-  if(payload.user && payload.user !== 'Guest'){
-    const userMsgs = JSON.parse(localStorage.getItem(`messages_${payload.user}`) || '[]');
-    userMsgs.unshift(payload);
-    localStorage.setItem(`messages_${payload.user}`, JSON.stringify(userMsgs));
-  }
-}
-
-// ---------- owner panel ----------
-const ownerModal = $('ownerModal');
-$('closeOwner').addEventListener('click', ()=> ownerModal.classList.remove('open'));
-$('ownerRefresh').addEventListener('click', ()=> loadOwnerMessages());
-$('ownerFilter').addEventListener('input', ()=> loadOwnerMessages());
-
-function openOwnerPanel(){
-  ownerModal.classList.add('open');
-  loadOwnerMessages();
-}
-
-function loadOwnerMessages(){
-  const listEl = $('ownerMsgList');
-  const arr = JSON.parse(localStorage.getItem('ownerMessages') || '[]');
-  const filter = $('ownerFilter').value.toLowerCase().trim();
-  listEl.innerHTML = '';
-  arr.filter(m=>{
-    if(!filter) return true;
-    return (m.brand + ' ' + m.model + ' ' + m.message + ' ' + m.user).toLowerCase().includes(filter);
-  }).forEach((m, idx) => {
-    const item = document.createElement('div');
-    item.className = 'msg-item';
-    item.innerHTML = `<strong>${m.brand} ${m.model}</strong><br><small>${m.user} • ${new Date(m.date).toLocaleString()}</small><div style="color:var(--muted);margin-top:6px">${m.message.slice(0,120)}</div>`;
-    item.addEventListener('click', ()=> openOwnerDetail(m, idx));
-    listEl.appendChild(item);
   });
 }
-
-function openOwnerDetail(m, idx){
-  const ownerDetail = $('ownerDetail');
-  ownerDetail.innerHTML = `
-    <div class="msg-open">
-      <div class="meta"><strong>${m.brand} ${m.model}</strong> • <small>${m.user} • ${new Date(m.date).toLocaleString()}</small></div>
-      <p style="white-space:pre-wrap">${m.message}</p>
-      <div style="margin-top:12px;display:flex;gap:8px">
-        <button class="btn" id="replyOwnerBtn">Mark in Progress</button>
-        <button class="btn ghost" id="resolveOwnerBtn">Mark Resolved</button>
-      </div>
-    </div>
-  `;
-  $('replyOwnerBtn').addEventListener('click', ()=> updateOwnerStatus(idx,'In Progress'));
-  $('resolveOwnerBtn').addEventListener('click', ()=> updateOwnerStatus(idx,'Resolved'));
-}
-
-function updateOwnerStatus(index,status){
-  const arr = JSON.parse(localStorage.getItem('ownerMessages') || '[]');
-  if(!arr[index]) return alert('Item not found');
-  arr[index].status = status;
-  arr[index].statusUpdated = new Date().toISOString();
-  localStorage.setItem('ownerMessages', JSON.stringify(arr));
-  loadOwnerMessages();
-  alert('Status updated to ' + status);
-}
-
-// ---------- auth (login/signup simulation) ----------
-let currentUser = null;
-const authModal = $('authModal');
-const authForm = $('authForm');
-const authTitle = $('authTitle');
-let authMode = 'login'; // or 'signup' - we'll use simple login; signup available via separate flow
-
-$('loginBtn').addEventListener('click', ()=> openAuth('login'));
-$('signupBtn').addEventListener('click', ()=> openAuth('signup'));
-$('authCancel').addEventListener('click', ()=> authModal.classList.remove('open'));
-
-function openAuth(mode){
-  authMode = mode;
-  authTitle.textContent = mode === 'login' ? 'Login' : 'Create Account';
-  $('authUser').value = '';
-  $('authPass').value = '';
-  authModal.classList.add('open');
-}
-
-authForm.addEventListener('submit', e=>{
-  e.preventDefault();
-  const user = $('authUser').value.trim();
-  const pass = $('authPass').value.trim();
-  if(!user || !pass) return alert('Enter credentials');
-  if(authMode === 'login'){
-    // owner login special
-    if(user === 'owner' && pass === 'ownerpass'){
-      authModal.classList.remove('open');
-      openOwnerPanel();
-      return;
-    }
-    const users = JSON.parse(localStorage.getItem('siteUsers') || '[]');
-    const found = users.find(u=>u.username === user || u.email === user);
-    if(!found || found.password !== pass) return alert('Invalid credentials');
-    currentUser = found;
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    authModal.classList.remove('open');
-    alert('Logged in as ' + currentUser.username);
-  } else {
-    // signup
-    const users = JSON.parse(localStorage.getItem('siteUsers') || '[]');
-    if(users.find(u=>u.username === user || u.email === user)) return alert('User exists');
-    const newUser = { username:user, email:user.includes('@')?user:user+'@example.com', password:pass };
-    users.push(newUser);
-    localStorage.setItem('siteUsers', JSON.stringify(users));
-    alert('Account created. Please login now.');
-    authModal.classList.remove('open');
-  }
-});
-
-// ---------- assistant (simple simulated) ----------
-const chatToggle = $('chatToggle');
-const assistant = $('assistant');
-const assistantMessages = $('assistantMessages');
-const assistantInput = $('assistantInput');
-
-chatToggle.addEventListener('click', ()=> assistant.classList.toggle('open'));
-$('assistantSend').addEventListener('click', ()=> {
-  const q = assistantInput.value.trim(); if(!q) return;
-  const p = document.createElement('div'); p.style.marginBottom='6px'; p.innerHTML = `<strong>You:</strong> ${q}`;
-  assistantMessages.appendChild(p);
-  assistantInput.value = '';
-  // simple rulebased replies
-  setTimeout(()=> {
-    const a = document.createElement('div'); a.style.marginBottom='8px'; a.innerHTML = `<strong>AI:</strong> ${smartReply(q)}`;
-    assistantMessages.appendChild(a);
-    assistantMessages.scrollTop = assistantMessages.scrollHeight;
-  }, 800);
-});
-
-function smartReply(q){
-  q = q.toLowerCase();
-  if(q.includes('no power')||q.includes('not power')||q.includes('won\'t turn')) return 'Check charger & LED. Try power reset: remove battery (if removable) and press power 20s. If still no power, likely PSU/battery or board issue.';
-  if(q.includes('no display')||q.includes('black screen')) return 'Try external monitor. Listen for fans/LEDs. If power on but no display, reseat RAM and check display cable or GPU issue.';
-  if(q.includes('overheat')||q.includes('hot')) return 'Clean vents, check fan spin, reapply thermal paste, update BIOS and drivers. For severe heating, board-level thermal inspection required.';
-  if(q.includes('data')||q.includes('recover')) return 'Stop using the disk. Data recovery needs dedicated tools; bring device early to prevent overwrite.';
-  return 'Please provide model & a short description (e.g., "Dell XPS 13 — no power"). We can assist with step-by-step checks.';
-}
-
-// ---------- owner quick open (owner button) ----------
-const ownerBtn = document.createElement('div');
-ownerBtn.className = 'owner-panel';
-ownerBtn.innerHTML = `<button class="owner-btn" id="openOwnerBtn">Owner Panel</button>`;
-document.body.appendChild(ownerBtn);
-$('openOwnerBtn').addEventListener('click', ()=> {
-  // ask for credentials
-  openAuth('login');
-});
-
-// ---------- show/hide contact section ----------
-$('openContact').addEventListener('click', ()=> {
-  const cs = $('contactSection');
-  cs.style.display = cs.style.display === 'none' || cs.style.display === '' ? 'block' : 'none';
-});
-
-// ---------- open services scroll ----------
-$('openServices').addEventListener('click', ()=> {
-  window.scrollTo({top:document.querySelector('.services').offsetTop - 20, behavior:'smooth'});
-});
-
-// On load: load last logged-in user if any
-(function init(){
-  const cu = JSON.parse(localStorage.getItem('currentUser') || 'null');
-  if(cu){ currentUser = cu; }
-})();
 </script>
 </body>
 </html>
