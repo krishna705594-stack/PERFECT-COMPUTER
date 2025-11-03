@@ -7,356 +7,306 @@
 <link rel="icon" href="data:,">
 <style>
   :root{
-    --bg1:#071428; --bg2:#0f2330; --accent:#00c3ff; --glass:rgba(255,255,255,0.05);
-    --muted:#a9bac6; --card:#ffffff;
+    --bg1:#071428; --bg2:#0f2330; --accent:#00c3ff; --accent2:#00ffa3;
+    --glass: rgba(255,255,255,0.04);
+    --muted: #9fb6c3;
+    --card-bg: #ffffff;
   }
   *{box-sizing:border-box}
-  body{
-    margin:0; font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-    background: linear-gradient(135deg,var(--bg1), var(--bg2)); color:#e6f7ff;
-    -webkit-font-smoothing:antialiased; min-height:100vh;
-  }
-
-  header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;gap:12px;}
-  .brand-title{display:flex;align-items:center;gap:14px}
-  .logo-placeholder{width:46px;height:46px;border-radius:8px;background:linear-gradient(135deg,#00b4ff,#6b8cff);display:flex;align-items:center;justify-content:center;font-weight:700;color:white}
+  body{margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;background:linear-gradient(135deg,var(--bg1),var(--bg2));color:#e6fbff;min-height:100vh}
+  header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .logo-placeholder{width:52px;height:52px;border-radius:10px;background:linear-gradient(135deg,#00b4ff,#6b8cff);display:flex;align-items:center;justify-content:center;font-weight:800;color:white;font-size:18px}
   h1{margin:0;font-size:20px;letter-spacing:1px}
   p.lead{margin:0;color:var(--muted);font-size:13px}
 
-  .container{padding:22px;display:flex;gap:20px;align-items:flex-start;}
-  .grid{display:grid;grid-template-columns: repeat(4, 1fr);gap:28px;flex:1;max-width:1200px;}
-  .company-card{
-    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-    border-radius:12px;height:150px;display:flex;align-items:center;justify-content:center;
-    border:4px solid rgba(255,255,255,0.06);cursor:pointer;transition:transform .18s ease, box-shadow .18s ease;
-    color:#f6fbff;font-weight:700;font-size:18px;text-transform:uppercase;
+  .wrap{display:flex;gap:28px;padding:20px 28px 60px}
+  /* LEFT: big rectangle with logos inside */
+  .left{
+    flex:1;
+    min-height:520px;
   }
-  .company-card:hover{ transform:translateY(-6px) scale(1.02); box-shadow: 0 10px 30px rgba(0,0,0,0.6); border-color: rgba(0,195,255,0.18); }
+  .big-rect{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:6px solid rgba(255,255,255,0.08);
+    border-radius:10px;
+    padding:22px;
+    min-height:420px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .logos-grid{
+    width:95%;
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:20px;
+    align-items:center;
+    justify-items:center;
+  }
+  .logo-box{
+    width:220px;height:120px;border:4px solid rgba(0,0,0,0.6);border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease;
+  }
+  .logo-box img{max-width:85%;max-height:85%;}
+  .logo-box:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(0,0,0,0.45)}
 
-  /* Right panel */
-  .right-panel{width:320px;display:flex;flex-direction:column;gap:12px}
-  .card{background:var(--glass);border-radius:12px;padding:14px;backdrop-filter: blur(8px);border:1px solid rgba(255,255,255,0.04)}
-  .white-card{background:#fff;color:#0d2b33;border-radius:10px;padding:12px}
-  .white-card h4{margin:0 0 8px 0}
-  .admin-toggle{position:fixed;right:18px;top:18px;background:transparent;border:2px solid rgba(255,255,255,0.06);color:var(--muted);padding:8px 10px;border-radius:10px;cursor:pointer}
+  /* Specialities area under logos */
+  .specialities{
+    margin-top:28px;padding:18px;border-radius:10px;border:4px solid rgba(255,255,255,0.08);background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+    color:#eafcff;
+  }
+  .spec-title{font-size:34px;color:#fff;margin:6px 0 12px 0}
+  .spec-grid{display:flex;gap:14px;flex-wrap:wrap}
+  .spec-card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));padding:14px;border-radius:10px;min-width:180px;box-shadow:0 8px 24px rgba(2,10,14,0.25)}
+  .spec-card h4{margin:0;color:#dffcff}
 
-  /* Facilities & shop info */
-  .facilities{display:flex;flex-direction:column;gap:6px;font-size:14px;color:#eaf8ff}
-  .facilities li{margin-left:18px}
+  /* RIGHT: fixed form panel */
+  .right{
+    width:380px;
+    position:sticky;
+    top:28px;
+    align-self:flex-start;
+  }
+  .form-card{
+    background:var(--card-bg);color:#072228;border-radius:12px;padding:16px;box-shadow:0 18px 50px rgba(2,12,16,0.45);
+  }
+  .form-card h3{margin:4px 0 8px 0;text-align:center}
+  .preview{
+    width:100%;height:150px;border-radius:8px;border:2px dashed #d7e7ea;display:flex;align-items:center;justify-content:center;margin-bottom:10px;overflow:hidden;background:#fbfeff;color:#3b6b72
+  }
+  label{font-weight:600;font-size:13px;color:#0b3a3e}
+  input[type="text"], input[type="tel"], textarea, select{
+    width:100%;padding:10px;border-radius:8px;border:1px solid #d7e7ea;margin-top:8px;margin-bottom:8px;font-size:14px;
+  }
+  textarea{resize:vertical;min-height:80px}
+  .row{display:flex;gap:8px}
+  .small{flex:1}
+  .btn{padding:10px 14px;border-radius:8px;border:none;cursor:pointer}
+  .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#042b28;font-weight:800}
+  .btn-ghost{background:#fff;border:1px solid #d7e7ea}
 
-  /* Modal for custom */
-  .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,10,0.6);display:none;align-items:center;justify-content:center;z-index:1200}
-  .modal{width:420px;background:var(--card);border-radius:12px;padding:18px;color:#0b1b24;box-shadow:0 30px 80px rgba(2,6,10,0.6)}
-  .field{margin:8px 0}
-  .field label{display:block;font-size:13px;color:#233b46;margin-bottom:6px;font-weight:600}
-  .field input[type="text"], .field input[type="tel"], .field textarea, .field select{width:100%;padding:10px;border-radius:8px;border:1px solid #d7e2e8;font-size:14px}
-  .camera-row{display:flex;gap:8px;align-items:center;margin-top:8px}
-  .btn{padding:10px 12px;border-radius:8px;border:none;cursor:pointer}
-  .btn-primary{background:linear-gradient(90deg,#00b4ff,#00ffa3);color:#042331;font-weight:700}
-  .btn-ghost{background:transparent;border:1px solid #cbd8e1;color:#0b1b24}
+  .owner-toggle{position:fixed;right:18px;top:18px;background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--muted);padding:8px 10px;border-radius:10px;cursor:pointer;z-index:999}
 
-  /* small helpers */
-  .note-small{font-size:13px;color:var(--muted)}
-  .muted{color:var(--muted)}
-  .center{text-align:center}
-  .model-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  .model-card{background:#fff;border-radius:10px;padding:10px;color:#07323a;text-align:center;box-shadow:0 6px 18px rgba(2,18,22,0.06)}
-  .model-card img{width:100%;height:120px;object-fit:cover;border-radius:8px}
-  .form-row{margin-top:8px}
+  /* owner panel */
+  .owner-panel{position:fixed;right:18px;top:62px;width:300px;background:var(--glass);padding:12px;border-radius:10px;display:none;z-index:999;color:#eaffff}
+  .owner-panel input{width:100%;padding:8px;border-radius:8px;border:none;background:rgba(255,255,255,0.03);margin-top:8px;color:#fff}
+  .owner-panel button{width:100%;margin-top:8px;padding:10px;border-radius:8px;border:none;background:linear-gradient(90deg,var(--accent),var(--accent2));font-weight:800;color:#042b28;cursor:pointer}
 
-  @media (max-width:1000px){ .grid{grid-template-columns:repeat(2,1fr)} .right-panel{display:none} }
+  /* helper */
+  .muted{color:var(--muted);font-size:13px}
+  .note{font-size:13px;color:#0b3a3e;background:#f0fbfb;padding:8px;border-radius:8px;margin-top:8px;text-align:center}
+
+  @media (max-width:1000px){
+    .wrap{flex-direction:column;padding:14px}
+    .right{position:relative;width:100%}
+    .logo-box{width:48%;height:100px}
+    .logos-grid{grid-template-columns: repeat(2, 1fr)}
+  }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="brand-title">
+  <div class="brand">
     <div class="logo-placeholder">PC</div>
     <div>
       <h1>PERFECT COMPUTERS</h1>
-      <p class="lead">Laptop repair portal — Customer & Owner interfaces</p>
+      <p class="lead">Laptop repair — fast, chip-level & professional</p>
     </div>
   </div>
 
-  <div style="display:flex;gap:12px;align-items:center">
-    <div style="font-size:13px;color:var(--muted)">Tip: Click any company to open the customer form in a new tab.</div>
-    <button class="admin-toggle" id="openAdminBtn">Owner Login</button>
+  <div style="display:flex;align-items:center;gap:12px">
+    <div class="muted">Call / WhatsApp: +91-XXXXXXXXXX</div>
+    <button class="owner-toggle" id="openOwner">Owner Login</button>
   </div>
 </header>
 
-<div class="container">
+<div class="wrap">
 
-  <!-- Company grid -->
-  <div class="grid" id="companyGrid">
-    <div class="company-card" data-company="HP">HP</div>
-    <div class="company-card" data-company="DELL">DELL</div>
-    <div class="company-card" data-company="LENOVO">LENOVO</div>
-    <div class="company-card" data-company="ASUS">ASUS</div>
-    <div class="company-card" data-company="ACER">ACER</div>
-    <div class="company-card" data-company="APPLE">APPLE</div>
-    <div class="company-card" data-company="MSI">MSI</div>
-    <div class="company-card" data-company="CUSTOM" id="customCard">CUSTOM</div>
-  </div>
+  <!-- LEFT: big rectangle with logos + specialities -->
+  <div class="left">
+    <div class="big-rect">
+      <div style="width:100%">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div style="color:#dffcff;font-weight:700">Select your Laptop Brand</div>
+          <div class="muted">Tap a logo — form will open on the right</div>
+        </div>
 
-  <!-- Right panel (Owner + White instruction card + Facilities) -->
-  <aside class="right-panel">
+        <div class="logos-grid" id="logosGrid">
+          <!-- Logo boxes (clickable) -->
+          <div class="logo-box" data-company="HP" title="HP"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/HP_logo_2012.png" alt="HP"></div>
+          <div class="logo-box" data-company="DELL" title="DELL"><img src="https://upload.wikimedia.org/wikipedia/commons/7/79/Dell_Logo.svg" alt="DELL"></div>
+          <div class="logo-box" data-company="LENOVO" title="LENOVO"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Lenovo_logo.svg" alt="LENOVO"></div>
+          <div class="logo-box" data-company="ASUS" title="ASUS"><img src="https://upload.wikimedia.org/wikipedia/commons/3/39/ASUS_Logo.svg" alt="ASUS"></div>
 
-    <!-- Owner login card (toggle) -->
-    <div class="card" id="adminBox" style="display:none">
-      <h3 style="margin:0 0 8px 0">Owner / Admin Login</h3>
-      <input id="adminUser" placeholder="Username" />
-      <input id="adminPass" placeholder="Password" type="password" />
-      <button id="adminLoginBtn" style="margin-top:8px;background:linear-gradient(90deg,#00b4ff,#00ffa3);padding:10px;border-radius:8px;border:none;cursor:pointer;font-weight:700">Login</button>
-      <div class="note-small" style="margin-top:8px">Temporary credentials: <strong>1 / 55</strong> — replace in script later.</div>
-    </div>
-
-    <!-- The white card you asked to arrange — clearer and neat -->
-    <div class="white-card">
-      <h4>How customers should fill</h4>
-      <ol style="margin:6px 0 0 18px;color:#07323a">
-        <li>Choose company (or <strong>CUSTOM</strong>).</li>
-        <li>Enter <strong>Company, Model No, Series, Description</strong>.</li>
-        <li>Add contact number and one clear picture.</li>
-        <li>Press <strong>Send</strong> — we'll show confirmation. (Connect backend later.)</li>
-      </ol>
-      <p class="note-small" style="margin-top:8px">Note: Model, Series, Issue & Picture are required for quick service.</p>
-    </div>
-
-    <!-- Facilities / Shop info (English) -->
-    <div class="card">
-      <h4 style="margin:0 0 8px 0;color:#dff9ff">Our Services & Facilities</h4>
-      <ul class="facilities" style="margin:0;padding:0 0 0 6px">
-        <li>Laptop Repairing (Chip-level)</li>
-        <li>Complete Laptop Service & Diagnostics</li>
-        <li>Data Recovery & Backup</li>
-        <li>Motherboard Repair & Replacement</li>
-        <li>Virus / Malware Removal & OS Service</li>
-        <li>Parts Replacement (Battery, Charger, Keyboard, Screen)</li>
-        <li>Chip-level PCB repair & SMD work</li>
-      </ul>
-      <div style="margin-top:10px;color:var(--muted);font-size:13px">
-        <strong>Location:</strong> 123, PERFECT COMPUTERS, Tech Street, YourCity<br>
-        <strong>Contact:</strong> +91-XXXXXXXXXX
+          <div class="logo-box" data-company="APPLE" title="APPLE"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="APPLE"></div>
+          <div class="logo-box" data-company="ACER" title="ACER"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Acer_2016_logo.svg" alt="ACER"></div>
+          <div class="logo-box" data-company="MSI" title="MSI"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/MSI_2018_logo.svg" alt="MSI"></div>
+          <div class="logo-box" data-company="CUSTOM" title="CUSTOM"><img src="https://via.placeholder.com/200x80?text=CUSTOM" alt="CUSTOM"></div>
+        </div>
       </div>
     </div>
 
-  </aside>
+    <!-- Specialities below the big rectangle -->
+    <div class="specialities">
+      <div class="spec-title">Our Specialities</div>
+      <div class="spec-grid">
+        <div class="spec-card"><h4>Chip-level Repair</h4><div class="muted">Board-level troubleshooting & SMD work</div></div>
+        <div class="spec-card"><h4>Data Recovery</h4><div class="muted">Recover lost data from HDD / SSD</div></div>
+        <div class="spec-card"><h4>Motherboard Replacement</h4><div class="muted">Genuine parts & tested replacements</div></div>
+        <div class="spec-card"><h4>Virus Removal & OS Service</h4><div class="muted">Clean install, backup & optimization</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: form (fixed/visible) -->
+  <div class="right">
+    <div class="form-card" id="formCard">
+      <h3 id="formTitle">Send Repair Request</h3>
+
+      <div class="preview" id="chosenPreview">Chosen picture preview will show here</div>
+
+      <label>Company</label>
+      <input type="text" id="companyField" placeholder="Company name" readonly>
+
+      <label>Model</label>
+      <input type="text" id="modelField" placeholder="Model (e.g. G5 / Inspiron / ThinkPad )">
+
+      <label>Series</label>
+      <input type="text" id="seriesField" placeholder="Series / Sub-model">
+
+      <label>Describe the problem</label>
+      <textarea id="issueField" placeholder="Write the problem in detail..."></textarea>
+
+      <label>Your mobile number</label>
+      <input type="tel" id="contactField" placeholder="+91-XXXXXXXXXX">
+
+      <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+        <label class="btn btn-ghost" id="choosePhotoBtn">Choose / Take Photo</label>
+        <input type="file" id="photoInput" accept="image/*" style="display:none" capture="environment">
+        <button class="btn btn-primary" id="sendBtn">Send</button>
+      </div>
+
+      <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+        <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="repairedCheck"> Somewhere repaired before</label>
+      </div>
+
+      <div class="note" style="margin-top:12px">Note: Model, Series, Issue & Picture help us diagnose quickly. Please include clear photo and contact number.</div>
+    </div>
+  </div>
+
 </div>
 
-<!-- Custom modal -->
-<div class="modal-backdrop" id="modalBackdrop">
-  <div class="modal" role="dialog" aria-modal="true">
-    <h2>Custom Repair Request</h2>
-
-    <div class="field"><label>Company</label><input id="c_company" type="text" placeholder="E.g. MyBrand"></div>
-    <div class="field"><label>Model</label><input id="c_model" type="text" placeholder="Model number"></div>
-    <div class="field"><label>Series</label><input id="c_series" type="text" placeholder="Series / Sub-model"></div>
-    <div class="field"><label>Description / Issue</label><textarea id="c_issue" rows="3" placeholder="Describe the problem"></textarea></div>
-    <div class="field"><label>Contact No</label><input id="c_contact" type="tel" placeholder="Mobile number"></div>
-
-    <div class="field">
-      <label>Repaired status</label>
-      <div style="display:flex;gap:12px">
-        <label style="display:flex;gap:6px;align-items:center"><input name="repstat" type="radio" value="repaired"> Repaired</label>
-        <label style="display:flex;gap:6px;align-items:center"><input name="repstat" type="radio" value="not_repaired" checked> Not Repaired</label>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>Picture (required)</label>
-      <div class="camera-row">
-        <label class="btn btn-ghost" id="takePicBtn">📷 Take / Choose Photo</label>
-        <input id="c_file" accept="image/*" type="file" style="display:none" capture="environment">
-        <div id="thumb" style="min-width:90px;min-height:70px;border:1px dashed #cbd8e1;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#3b4d56">No photo</div>
-      </div>
-    </div>
-
-    <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end">
-      <button class="btn" id="cancelModal">Cancel</button>
-      <button class="btn btn-primary" id="sendCustom">Send</button>
-    </div>
-  </div>
+<!-- Owner panel -->
+<div class="owner-panel" id="ownerPanel" aria-hidden="true">
+  <div style="font-weight:700;margin-bottom:6px">Owner Login</div>
+  <input id="ownerUser" placeholder="Username">
+  <input id="ownerPass" placeholder="Password" type="password">
+  <button id="ownerLoginBtn">Login</button>
+  <div style="font-size:13px;color:#dffcff;margin-top:8px">Temporary credentials: <strong>1</strong> / <strong>55</strong></div>
 </div>
 
 <script>
-/* -------------------------
-   Company -> open models tab
-   ------------------------- */
-const grid = document.getElementById('companyGrid');
-grid.addEventListener('click', e => {
-  const card = e.target.closest('.company-card');
-  if(!card) return;
-  const company = card.dataset.company || 'CUSTOM';
-  if(company === 'CUSTOM'){ openCustomModal(); return; }
+  // Elements
+  const logosGrid = document.getElementById('logosGrid');
+  const companyField = document.getElementById('companyField');
+  const modelField = document.getElementById('modelField');
+  const seriesField = document.getElementById('seriesField');
+  const issueField = document.getElementById('issueField');
+  const contactField = document.getElementById('contactField');
+  const photoInput = document.getElementById('photoInput');
+  const chosenPreview = document.getElementById('chosenPreview');
+  const choosePhotoBtn = document.getElementById('choosePhotoBtn');
+  const sendBtn = document.getElementById('sendBtn');
+  const repairedCheck = document.getElementById('repairedCheck');
+  const formTitle = document.getElementById('formTitle');
 
-  // Build new tab with models listing
-  const newWin = window.open('', '_blank');
-  if(!newWin){ alert('Popup blocked. Allow popups for this site to open the form.'); return; }
+  // Owner panel
+  const openOwner = document.getElementById('openOwner');
+  const ownerPanel = document.getElementById('ownerPanel');
+  const ownerLoginBtn = document.getElementById('ownerLoginBtn');
 
-  // Sample models + images (you can replace URLs later with real images)
-  const sampleModels = [
-    { model:'Model X1', img: 'https://via.placeholder.com/360x200?text=' + company + '+X1' },
-    { model:'Model X2', img: 'https://via.placeholder.com/360x200?text=' + company + '+X2' },
-    { model:'Model Pro', img: 'https://via.placeholder.com/360x200?text=' + company + '+Pro' },
-    { model:'Model Slim', img: 'https://via.placeholder.com/360x200?text=' + company + '+Slim' },
-    { model:'Model Air', img: 'https://via.placeholder.com/360x200?text=' + company + '+Air' },
-    { model:'Model Note', img: 'https://via.placeholder.com/360x200?text=' + company + '+Note' }
-  ];
-
-  // New tab styles + markup
-  const style = `
-    body{font-family:Inter,Arial;background:linear-gradient(180deg,#eef9ff,#f6fbff);margin:0;color:#05333a}
-    .wrap{max-width:1100px;margin:24px auto;padding:18px}
-    .top{display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .card{background:#fff;border-radius:12px;padding:18px;box-shadow:0 20px 40px rgba(3,19,23,0.06)}
-    h1{margin:0;color:#022b33}
-    .note{color:#395d64;margin:8px 0}
-    .model-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:14px}
-    .model-card{background:#fff;border-radius:10px;padding:10px;color:#07323a;text-align:center;border:1px solid #e6f2f5}
-    .model-card img{width:100%;height:140px;object-fit:cover;border-radius:8px}
-    .input{width:100%;padding:8px;border-radius:8px;border:1px solid #d7e7ea;margin-top:8px}
-    .small-row{display:flex;gap:8px;margin-top:8px}
-    .send{background:linear-gradient(90deg,#00b4ff,#00ffa3);padding:10px;border-radius:8px;border:none;color:#042331;font-weight:700;cursor:pointer}
-    .choose{background:#fff;border:1px solid #bcd6df;padding:8px;border-radius:8px;cursor:pointer}
-    @media(max-width:900px){ .model-grid{grid-template-columns:repeat(1,1fr)} }
-  `;
-
-  let html = `
-    <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Models - ${company}</title><style>${style}</style></head><body>
-    <div class="wrap">
-      <div class="top"><div><h1>Choose model — ${company}</h1><div class="note"><strong>Note:</strong> Please fill Model No, Series, Issue and add a photo so we can help quickly.</div></div>
-      <div style="color:#698a92;font-weight:700">PERFECT COMPUTERS</div></div>
-
-      <div style="margin-top:12px" class="card">
-        <div style="font-size:14px;color:#355a60">Tap a model, describe your problem below that model and press Send. Message goes directly to the shop (demo uses JS alert & console).</div>
-
-        <div class="model-grid">
-  `;
-
-  sampleModels.forEach((m, idx) => {
-    html += `
-      <div class="model-card" data-idx="${idx}">
-        <img src="${m.img}" alt="${m.model}">
-        <div style="font-weight:700;margin-top:8px">${m.model}</div>
-        <input class="input" id="model_${idx}" value="${m.model}" placeholder="Model no">
-        <input class="input" id="series_${idx}" placeholder="Series (optional)">
-        <textarea id="issue_${idx}" class="input" rows="3" placeholder="Describe the problem (required)"></textarea>
-        <input id="contact_${idx}" class="input" placeholder="Your mobile number (required)">
-        <div class="small-row" style="margin-top:8px;justify-content:space-between;align-items:center">
-          <div>
-            <input id="file_${idx}" type="file" accept="image/*" style="display:none">
-            <button class="choose" id="choose_${idx}">Choose / Take Photo</button>
-          </div>
-          <button class="send" id="send_${idx}">Send</button>
-        </div>
-        <div id="preview_${idx}" style="margin-top:8px;color:#78949b;font-size:13px">No photo chosen</div>
-      </div>
-    `;
+  openOwner.addEventListener('click', ()=> {
+    ownerPanel.style.display = ownerPanel.style.display === 'block' ? 'none' : 'block';
   });
 
-  html += `</div></div></div></body></html>`;
+  ownerLoginBtn.addEventListener('click', ()=>{
+    const u = document.getElementById('ownerUser').value.trim();
+    const p = document.getElementById('ownerPass').value.trim();
+    if(u === '1' && p === '55'){
+      alert('Owner logged in (temporary). Replace with real auth later.');
+    } else {
+      alert('Invalid owner credentials');
+    }
+  });
 
-  newWin.document.open();
-  newWin.document.write(html);
-  newWin.document.close();
+  // Clicking any logo fills company and focuses issue
+  logosGrid.addEventListener('click', (ev)=>{
+    const box = ev.target.closest('.logo-box');
+    if(!box) return;
+    const company = box.dataset.company || 'CUSTOM';
+    companyField.value = company;
+    formTitle.textContent = company + " — Repair Request";
+    // scroll to form (mobile)
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    issueField.focus();
+  });
 
-  // After DOM ready in new tab, attach handlers
-  newWin.onload = () => {
-    sampleModels.forEach((m, idx) => {
-      const choose = newWin.document.getElementById('choose_' + idx);
-      const file = newWin.document.getElementById('file_' + idx);
-      const preview = newWin.document.getElementById('preview_' + idx);
-      const send = newWin.document.getElementById('send_' + idx);
+  // Photo chooser
+  choosePhotoBtn.addEventListener('click', ()=> photoInput.click());
+  photoInput.addEventListener('change', (e)=>{
+    const f = e.target.files[0];
+    if(!f){ chosenPreview.innerText = 'Chosen picture preview will show here'; return; }
+    const url = URL.createObjectURL(f);
+    chosenPreview.innerHTML = '<img src="'+url+'" style="width:100%;height:100%;object-fit:cover"/>';
+  });
 
-      choose.addEventListener('click', ()=> file.click());
-      file.addEventListener('change', (ev)=>{
-        const f = ev.target.files[0];
-        if(!f){ preview.textContent='No photo chosen'; return; }
-        const url = URL.createObjectURL(f);
-        preview.innerHTML = '<img src="'+url+'" style="max-width:100%;max-height:120px;border-radius:6px">';
-      });
+  // Send button - validate and demo action
+  sendBtn.addEventListener('click', ()=>{
+    const data = {
+      company: companyField.value.trim(),
+      model: modelField.value.trim(),
+      series: seriesField.value.trim(),
+      issue: issueField.value.trim(),
+      contact: contactField.value.trim(),
+      repairedBefore: repairedCheck.checked,
+      photo: photoInput.files[0] ? photoInput.files[0].name : null,
+      timestamp: new Date().toISOString()
+    };
 
-      send.addEventListener('click', ()=>{
-        const data = {
-          company: company,
-          model: (newWin.document.getElementById('model_' + idx).value || '').trim(),
-          series: (newWin.document.getElementById('series_' + idx).value || '').trim(),
-          issue: (newWin.document.getElementById('issue_' + idx).value || '').trim(),
-          contact: (newWin.document.getElementById('contact_' + idx).value || '').trim(),
-          fileName: file.files[0] ? file.files[0].name : null
-        };
-        // Validation
-        if(!data.model || !data.issue || !data.contact || !data.fileName){
-          alert('Please fill Model, Issue, Contact and attach a picture before sending.');
-          return;
-        }
-        // Demo action - replace with actual POST to server later
-        alert('Message sent to PERFECT COMPUTERS. We will contact you soon!');
-        console.log('Customer Request:', data);
-        // Optionally clear fields
-        newWin.document.getElementById('issue_' + idx).value = '';
-        newWin.document.getElementById('contact_' + idx).value = '';
-        file.value = null;
-        preview.textContent = 'No photo chosen';
-      });
-    });
-  };
-});
+    // required: company (auto), issue, contact, photo (model/series optional but recommended)
+    if(!data.company){
+      alert('Please choose a company from the left.');
+      return;
+    }
+    if(!data.issue){
+      alert('Please describe the problem.');
+      issueField.focus();
+      return;
+    }
+    if(!data.contact){
+      alert('Please provide a contact number.');
+      contactField.focus();
+      return;
+    }
+    if(!data.photo){
+      alert('Please attach a clear photo of the problem.');
+      return;
+    }
 
-/* -------------------------
-   Custom modal logic
-   ------------------------- */
-const modalBackdrop = document.getElementById('modalBackdrop');
-const customCard = document.getElementById('customCard');
-customCard.addEventListener('click', openCustomModal);
+    // Demo behavior: show confirmation, log data
+    alert('Message sent to PERFECT COMPUTERS. We will contact you soon!');
+    console.log('REPAIR REQUEST ->', data);
 
-function openCustomModal(){ modalBackdrop.style.display = 'flex'; }
-document.getElementById('cancelModal').addEventListener('click', ()=> modalBackdrop.style.display='none');
+    // reset form fields (keep company for convenience)
+    modelField.value=''; seriesField.value=''; issueField.value=''; contactField.value=''; repairedCheck.checked=false; photoInput.value='';
+    chosenPreview.innerText = 'Chosen picture preview will show here';
+  });
 
-document.getElementById('takePicBtn').addEventListener('click', ()=> document.getElementById('c_file').click());
-document.getElementById('c_file').addEventListener('change', e=>{
-  const f = e.target.files[0]; const thumb = document.getElementById('thumb');
-  if(!f){ thumb.innerText='No photo'; return; }
-  const url = URL.createObjectURL(f);
-  thumb.innerHTML = '<img src="'+url+'" style="max-width:100%;max-height:100%;border-radius:6px">';
-});
-
-document.getElementById('sendCustom').addEventListener('click', ()=>{
-  const data = {
-    company: document.getElementById('c_company').value.trim(),
-    model: document.getElementById('c_model').value.trim(),
-    series: document.getElementById('c_series').value.trim(),
-    issue: document.getElementById('c_issue').value.trim(),
-    contact: document.getElementById('c_contact').value.trim(),
-    repaired: (document.querySelector('input[name="repstat"]:checked')||{}).value || 'not_repaired',
-    file: document.getElementById('c_file').files[0] ? document.getElementById('c_file').files[0].name : null
-  };
-  if(!data.company || !data.model || !data.series || !data.issue || !data.contact || !data.file){
-    alert('Please complete all fields and attach a photo.');
-    return;
-  }
-  alert('Custom request sent to PERFECT COMPUTERS. Thank you!');
-  console.log('CUSTOM SUBMIT =>', data);
-  modalBackdrop.style.display='none';
-  // reset
-  document.getElementById('c_company').value='';document.getElementById('c_model').value='';document.getElementById('c_series').value='';
-  document.getElementById('c_issue').value='';document.getElementById('c_contact').value='';document.getElementById('c_file').value='';
-  document.getElementById('thumb').innerText='No photo';
-});
-
-/* -------------------------
-   Owner login toggle & auth
-   ------------------------- */
-const adminToggle = document.getElementById('openAdminBtn');
-const adminBox = document.getElementById('adminBox');
-adminToggle.addEventListener('click', ()=> { adminBox.style.display = adminBox.style.display === 'none' ? 'block' : 'none'; });
-
-document.getElementById('adminLoginBtn').addEventListener('click', ()=>{
-  const u = document.getElementById('adminUser').value.trim();
-  const p = document.getElementById('adminPass').value.trim();
-  // Replace with server-side auth later
-  if(u === '1' && p === '55'){ alert('Owner logged in (temporary).'); } else { alert('Invalid owner credentials'); }
-});
+  // Accessibility: allow pressing Enter on owner panel to submit
+  ownerPanel.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter') ownerLoginBtn.click();
+  });
 </script>
 </body>
 </html>
