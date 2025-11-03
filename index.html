@@ -1,312 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>PERFECT COMPUTERS — Repair Portal</title>
-<link rel="icon" href="data:,">
-<style>
-  :root{
-    --bg1:#071428; --bg2:#0f2330; --accent:#00c3ff; --accent2:#00ffa3;
-    --glass: rgba(255,255,255,0.04);
-    --muted: #9fb6c3;
-    --card-bg: #ffffff;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;background:linear-gradient(135deg,var(--bg1),var(--bg2));color:#e6fbff;min-height:100vh}
-  header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px}
-  .brand{display:flex;align-items:center;gap:14px}
-  .logo-placeholder{width:52px;height:52px;border-radius:10px;background:linear-gradient(135deg,#00b4ff,#6b8cff);display:flex;align-items:center;justify-content:center;font-weight:800;color:white;font-size:18px}
-  h1{margin:0;font-size:20px;letter-spacing:1px}
-  p.lead{margin:0;color:var(--muted);font-size:13px}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfect Computers - Project PC</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: radial-gradient(circle at top, #001f3f, #000814);
+      color: #fff;
+      text-align: center;
+    }
 
-  .wrap{display:flex;gap:28px;padding:20px 28px 60px}
-  /* LEFT: big rectangle with logos inside */
-  .left{
-    flex:1;
-    min-height:520px;
-  }
-  .big-rect{
-    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border:6px solid rgba(255,255,255,0.08);
-    border-radius:10px;
-    padding:22px;
-    min-height:420px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-  .logos-grid{
-    width:95%;
-    display:grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap:20px;
-    align-items:center;
-    justify-items:center;
-  }
-  .logo-box{
-    width:220px;height:120px;border:4px solid rgba(0,0,0,0.6);border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease;
-  }
-  .logo-box img{max-width:85%;max-height:85%;}
-  .logo-box:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(0,0,0,0.45)}
+    header {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 20px 0;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #00b4d8;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
 
-  /* Specialities area under logos */
-  .specialities{
-    margin-top:28px;padding:18px;border-radius:10px;border:4px solid rgba(255,255,255,0.08);background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
-    color:#eafcff;
-  }
-  .spec-title{font-size:34px;color:#fff;margin:6px 0 12px 0}
-  .spec-grid{display:flex;gap:14px;flex-wrap:wrap}
-  .spec-card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));padding:14px;border-radius:10px;min-width:180px;box-shadow:0 8px 24px rgba(2,10,14,0.25)}
-  .spec-card h4{margin:0;color:#dffcff}
+    h2 {
+      color: #00b4d8;
+      margin-bottom: 10px;
+    }
 
-  /* RIGHT: fixed form panel */
-  .right{
-    width:380px;
-    position:sticky;
-    top:28px;
-    align-self:flex-start;
-  }
-  .form-card{
-    background:var(--card-bg);color:#072228;border-radius:12px;padding:16px;box-shadow:0 18px 50px rgba(2,12,16,0.45);
-  }
-  .form-card h3{margin:4px 0 8px 0;text-align:center}
-  .preview{
-    width:100%;height:150px;border-radius:8px;border:2px dashed #d7e7ea;display:flex;align-items:center;justify-content:center;margin-bottom:10px;overflow:hidden;background:#fbfeff;color:#3b6b72
-  }
-  label{font-weight:600;font-size:13px;color:#0b3a3e}
-  input[type="text"], input[type="tel"], textarea, select{
-    width:100%;padding:10px;border-radius:8px;border:1px solid #d7e7ea;margin-top:8px;margin-bottom:8px;font-size:14px;
-  }
-  textarea{resize:vertical;min-height:80px}
-  .row{display:flex;gap:8px}
-  .small{flex:1}
-  .btn{padding:10px 14px;border-radius:8px;border:none;cursor:pointer}
-  .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#042b28;font-weight:800}
-  .btn-ghost{background:#fff;border:1px solid #d7e7ea}
+    .company-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 40px;
+      gap: 30px;
+    }
 
-  .owner-toggle{position:fixed;right:18px;top:18px;background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--muted);padding:8px 10px;border-radius:10px;cursor:pointer;z-index:999}
+    .company-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      width: 180px;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 0 10px rgba(0, 180, 216, 0.3);
+    }
 
-  /* owner panel */
-  .owner-panel{position:fixed;right:18px;top:62px;width:300px;background:var(--glass);padding:12px;border-radius:10px;display:none;z-index:999;color:#eaffff}
-  .owner-panel input{width:100%;padding:8px;border-radius:8px;border:none;background:rgba(255,255,255,0.03);margin-top:8px;color:#fff}
-  .owner-panel button{width:100%;margin-top:8px;padding:10px;border-radius:8px;border:none;background:linear-gradient(90deg,var(--accent),var(--accent2));font-weight:800;color:#042b28;cursor:pointer}
+    .company-card:hover {
+      background: rgba(0, 180, 216, 0.2);
+      transform: scale(1.07);
+      box-shadow: 0 0 15px rgba(0, 180, 216, 0.8);
+    }
 
-  /* helper */
-  .muted{color:var(--muted);font-size:13px}
-  .note{font-size:13px;color:#0b3a3e;background:#f0fbfb;padding:8px;border-radius:8px;margin-top:8px;text-align:center}
+    .company-card img {
+      max-width: 100px;
+      max-height: 60px;
+      filter: brightness(0) invert(1);
+    }
 
-  @media (max-width:1000px){
-    .wrap{flex-direction:column;padding:14px}
-    .right{position:relative;width:100%}
-    .logo-box{width:48%;height:100px}
-    .logos-grid{grid-template-columns: repeat(2, 1fr)}
-  }
-</style>
+    footer {
+      margin-top: 50px;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      font-size: 14px;
+      color: #ccc;
+    }
+  </style>
 </head>
 <body>
+  <header>
+    PERFECT COMPUTERS<br>
+    <span style="font-size:16px; color:#ccc;">Laptop Repair Portal — Customer Interface</span>
+  </header>
 
-<header>
-  <div class="brand">
-    <div class="logo-placeholder">PC</div>
-    <div>
-      <h1>PERFECT COMPUTERS</h1>
-      <p class="lead">Laptop repair — fast, chip-level & professional</p>
+  <h2>Select Your Laptop Brand</h2>
+
+  <div class="company-container">
+    <div class="company-card" onclick="openForm('hp')">
+      <img src="images/hp.png" alt="HP" />
+    </div>
+    <div class="company-card" onclick="openForm('dell')">
+      <img src="images/dell.png" alt="Dell" />
+    </div>
+    <div class="company-card" onclick="openForm('lenovo')">
+      <img src="images/lenovo.png" alt="Lenovo" />
+    </div>
+    <div class="company-card" onclick="openForm('asus')">
+      <img src="images/asus.png" alt="ASUS" />
+    </div>
+    <div class="company-card" onclick="openForm('acer')">
+      <img src="images/acer.png" alt="Acer" />
+    </div>
+    <div class="company-card" onclick="openForm('apple')">
+      <img src="images/apple.png" alt="Apple" />
+    </div>
+    <div class="company-card" onclick="openForm('msi')">
+      <img src="images/msi.png" alt="MSI" />
+    </div>
+    <div class="company-card" onclick="openForm('custom')">
+      <span style="font-size:18px; color:#00b4d8;">CUSTOM</span>
     </div>
   </div>
 
-  <div style="display:flex;align-items:center;gap:12px">
-    <div class="muted">Call / WhatsApp: +91-XXXXXXXXXX</div>
-    <button class="owner-toggle" id="openOwner">Owner Login</button>
-  </div>
-</header>
+  <footer>
+    © 2025 Perfect Computers | Chip-Level Laptop Repair & Services | All Rights Reserved
+  </footer>
 
-<div class="wrap">
-
-  <!-- LEFT: big rectangle with logos + specialities -->
-  <div class="left">
-    <div class="big-rect">
-      <div style="width:100%">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-          <div style="color:#dffcff;font-weight:700">Select your Laptop Brand</div>
-          <div class="muted">Tap a logo — form will open on the right</div>
+  <script>
+    function openForm(company) {
+      const win = window.open("", "_blank");
+      win.document.write(`
+      <html>
+      <head>
+        <title>${company.toUpperCase()} - Perfect Computers</title>
+        <style>
+          body {
+            margin: 0;
+            font-family: Poppins, sans-serif;
+            background: linear-gradient(135deg, #001f3f, #003566);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px;
+          }
+          .logo {
+            margin-top: 20px;
+          }
+          .logo img {
+            width: 200px;
+            height: auto;
+          }
+          .form-box {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 20px;
+            margin-top: 30px;
+            width: 320px;
+            box-shadow: 0 0 15px rgba(0,180,216,0.6);
+          }
+          input, textarea {
+            width: 100%;
+            margin: 8px 0;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            outline: none;
+          }
+          textarea {
+            height: 70px;
+            resize: none;
+          }
+          .send-btn {
+            background: #00b4d8;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+          }
+          .send-btn:hover {
+            background: #0096c7;
+          }
+          .specialities {
+            margin-top: 40px;
+            text-align: left;
+            background: rgba(0,0,0,0.5);
+            padding: 20px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 700px;
+          }
+          .specialities h3 {
+            color: #00b4d8;
+            margin-bottom: 10px;
+          }
+          .specialities ul {
+            list-style: none;
+            padding: 0;
+          }
+          .specialities li {
+            margin: 5px 0;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="logo">
+          <img src="images/${company}.png" alt="${company}">
+        </div>
+        <div class="form-box">
+          <h2>${company.toUpperCase()} Laptop Service Form</h2>
+          <input type="text" placeholder="Series" />
+          <textarea placeholder="Describe the problem"></textarea>
+          <input type="text" placeholder="Your mobile number" />
+          <input type="file" accept="image/*" capture="environment" />
+          <br><br>
+          <button class="send-btn">Send</button>
         </div>
 
-        <div class="logos-grid" id="logosGrid">
-          <!-- Logo boxes (clickable) -->
-          <div class="logo-box" data-company="HP" title="HP"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/HP_logo_2012.png" alt="HP"></div>
-          <div class="logo-box" data-company="DELL" title="DELL"><img src="https://upload.wikimedia.org/wikipedia/commons/7/79/Dell_Logo.svg" alt="DELL"></div>
-          <div class="logo-box" data-company="LENOVO" title="LENOVO"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Lenovo_logo.svg" alt="LENOVO"></div>
-          <div class="logo-box" data-company="ASUS" title="ASUS"><img src="https://upload.wikimedia.org/wikipedia/commons/3/39/ASUS_Logo.svg" alt="ASUS"></div>
-
-          <div class="logo-box" data-company="APPLE" title="APPLE"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="APPLE"></div>
-          <div class="logo-box" data-company="ACER" title="ACER"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Acer_2016_logo.svg" alt="ACER"></div>
-          <div class="logo-box" data-company="MSI" title="MSI"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/MSI_2018_logo.svg" alt="MSI"></div>
-          <div class="logo-box" data-company="CUSTOM" title="CUSTOM"><img src="https://via.placeholder.com/200x80?text=CUSTOM" alt="CUSTOM"></div>
+        <div class="specialities">
+          <h3>Our Specialities</h3>
+          <ul>
+            <li>✔ Laptop Repairing</li>
+            <li>✔ Laptop Servicing</li>
+            <li>✔ Data Recovery</li>
+            <li>✔ Motherboard Repair</li>
+            <li>✔ Virus Removal</li>
+            <li>✔ Complete Laptop Servicing</li>
+            <li>✔ Motherboard Replacement</li>
+            <li>✔ Part Replacement</li>
+            <li>✔ Battery Replacement</li>
+            <li>✔ Chip Level Repairs</li>
+          </ul>
         </div>
-      </div>
-    </div>
-
-    <!-- Specialities below the big rectangle -->
-    <div class="specialities">
-      <div class="spec-title">Our Specialities</div>
-      <div class="spec-grid">
-        <div class="spec-card"><h4>Chip-level Repair</h4><div class="muted">Board-level troubleshooting & SMD work</div></div>
-        <div class="spec-card"><h4>Data Recovery</h4><div class="muted">Recover lost data from HDD / SSD</div></div>
-        <div class="spec-card"><h4>Motherboard Replacement</h4><div class="muted">Genuine parts & tested replacements</div></div>
-        <div class="spec-card"><h4>Virus Removal & OS Service</h4><div class="muted">Clean install, backup & optimization</div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- RIGHT: form (fixed/visible) -->
-  <div class="right">
-    <div class="form-card" id="formCard">
-      <h3 id="formTitle">Send Repair Request</h3>
-
-      <div class="preview" id="chosenPreview">Chosen picture preview will show here</div>
-
-      <label>Company</label>
-      <input type="text" id="companyField" placeholder="Company name" readonly>
-
-      <label>Model</label>
-      <input type="text" id="modelField" placeholder="Model (e.g. G5 / Inspiron / ThinkPad )">
-
-      <label>Series</label>
-      <input type="text" id="seriesField" placeholder="Series / Sub-model">
-
-      <label>Describe the problem</label>
-      <textarea id="issueField" placeholder="Write the problem in detail..."></textarea>
-
-      <label>Your mobile number</label>
-      <input type="tel" id="contactField" placeholder="+91-XXXXXXXXXX">
-
-      <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
-        <label class="btn btn-ghost" id="choosePhotoBtn">Choose / Take Photo</label>
-        <input type="file" id="photoInput" accept="image/*" style="display:none" capture="environment">
-        <button class="btn btn-primary" id="sendBtn">Send</button>
-      </div>
-
-      <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
-        <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="repairedCheck"> Somewhere repaired before</label>
-      </div>
-
-      <div class="note" style="margin-top:12px">Note: Model, Series, Issue & Picture help us diagnose quickly. Please include clear photo and contact number.</div>
-    </div>
-  </div>
-
-</div>
-
-<!-- Owner panel -->
-<div class="owner-panel" id="ownerPanel" aria-hidden="true">
-  <div style="font-weight:700;margin-bottom:6px">Owner Login</div>
-  <input id="ownerUser" placeholder="Username">
-  <input id="ownerPass" placeholder="Password" type="password">
-  <button id="ownerLoginBtn">Login</button>
-  <div style="font-size:13px;color:#dffcff;margin-top:8px">Temporary credentials: <strong>1</strong> / <strong>55</strong></div>
-</div>
-
-<script>
-  // Elements
-  const logosGrid = document.getElementById('logosGrid');
-  const companyField = document.getElementById('companyField');
-  const modelField = document.getElementById('modelField');
-  const seriesField = document.getElementById('seriesField');
-  const issueField = document.getElementById('issueField');
-  const contactField = document.getElementById('contactField');
-  const photoInput = document.getElementById('photoInput');
-  const chosenPreview = document.getElementById('chosenPreview');
-  const choosePhotoBtn = document.getElementById('choosePhotoBtn');
-  const sendBtn = document.getElementById('sendBtn');
-  const repairedCheck = document.getElementById('repairedCheck');
-  const formTitle = document.getElementById('formTitle');
-
-  // Owner panel
-  const openOwner = document.getElementById('openOwner');
-  const ownerPanel = document.getElementById('ownerPanel');
-  const ownerLoginBtn = document.getElementById('ownerLoginBtn');
-
-  openOwner.addEventListener('click', ()=> {
-    ownerPanel.style.display = ownerPanel.style.display === 'block' ? 'none' : 'block';
-  });
-
-  ownerLoginBtn.addEventListener('click', ()=>{
-    const u = document.getElementById('ownerUser').value.trim();
-    const p = document.getElementById('ownerPass').value.trim();
-    if(u === '1' && p === '55'){
-      alert('Owner logged in (temporary). Replace with real auth later.');
-    } else {
-      alert('Invalid owner credentials');
+      </body>
+      </html>
+      `);
     }
-  });
-
-  // Clicking any logo fills company and focuses issue
-  logosGrid.addEventListener('click', (ev)=>{
-    const box = ev.target.closest('.logo-box');
-    if(!box) return;
-    const company = box.dataset.company || 'CUSTOM';
-    companyField.value = company;
-    formTitle.textContent = company + " — Repair Request";
-    // scroll to form (mobile)
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    issueField.focus();
-  });
-
-  // Photo chooser
-  choosePhotoBtn.addEventListener('click', ()=> photoInput.click());
-  photoInput.addEventListener('change', (e)=>{
-    const f = e.target.files[0];
-    if(!f){ chosenPreview.innerText = 'Chosen picture preview will show here'; return; }
-    const url = URL.createObjectURL(f);
-    chosenPreview.innerHTML = '<img src="'+url+'" style="width:100%;height:100%;object-fit:cover"/>';
-  });
-
-  // Send button - validate and demo action
-  sendBtn.addEventListener('click', ()=>{
-    const data = {
-      company: companyField.value.trim(),
-      model: modelField.value.trim(),
-      series: seriesField.value.trim(),
-      issue: issueField.value.trim(),
-      contact: contactField.value.trim(),
-      repairedBefore: repairedCheck.checked,
-      photo: photoInput.files[0] ? photoInput.files[0].name : null,
-      timestamp: new Date().toISOString()
-    };
-
-    // required: company (auto), issue, contact, photo (model/series optional but recommended)
-    if(!data.company){
-      alert('Please choose a company from the left.');
-      return;
-    }
-    if(!data.issue){
-      alert('Please describe the problem.');
-      issueField.focus();
-      return;
-    }
-    if(!data.contact){
-      alert('Please provide a contact number.');
-      contactField.focus();
-      return;
-    }
-    if(!data.photo){
-      alert('Please attach a clear photo of the problem.');
-      return;
-    }
-
-    // Demo behavior: show confirmation, log data
-    alert('Message sent to PERFECT COMPUTERS. We will contact you soon!');
-    console.log('REPAIR REQUEST ->', data);
-
-    // reset form fields (keep company for convenience)
-    modelField.value=''; seriesField.value=''; issueField.value=''; contactField.value=''; repairedCheck.checked=false; photoInput.value='';
-    chosenPreview.innerText = 'Chosen picture preview will show here';
-  });
-
-  // Accessibility: allow pressing Enter on owner panel to submit
-  ownerPanel.addEventListener('keydown', (e)=>{
-    if(e.key === 'Enter') ownerLoginBtn.click();
-  });
-</script>
+  </script>
 </body>
 </html>
